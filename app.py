@@ -28,14 +28,21 @@ with st.sidebar:
     # 텍스트 입력 필드
     destination = st.text_input("여행지", "제주도")
     # 숫자 입력 필드 (최소 1일)
-    duration = st.number_input("여행 기간 (일)", 3, min_value=1)
+    duration = st.text_input("여행 기간 (일)", "3" )
     # 넓은 텍스트 영역 (테마 및 상세 요청)
     theme = st.text_area("여행 테마 및 선호사항", "사진 찍기 좋은 카페, 맛집 위주로 계획해 줘.", height=150)
 
     # 4. 모델 호출 버튼
     if st.button("일정 생성 시작"):
-        if not destination or not theme:
-            st.error("여행지와 테마를 입력해 주세요.")
+        # 입력된 여행 기간을 정수로 변환
+        try:
+            duration = int(duration_str)
+        except ValueError:
+            st.error("오류: 여행 기간은 숫자로만 입력해야 합니다.")
+            st.stop()
+            
+        if not destination or not theme or duration<1;
+            st.error("여행지와 테마를 입력하고 기간은 1일 이상으로 설정해주세")
         else:
             # 5. 프롬프트 구성
             prompt = f"""
@@ -62,4 +69,5 @@ with st.sidebar:
 # --- 7. 결과 표시 ---
 if 'travel_plan' in st.session_state:
     st.header("✨ 완성된 여행 일정")
+
     st.markdown(st.session_state['travel_plan']) # Markdown 형식으로 예쁘게 표시
